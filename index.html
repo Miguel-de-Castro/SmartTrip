@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ViagemSmart | Controle de Gastos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f0fdf4',
+                100: '#dcfce7',
+                200: '#bbf7d0',
+                300: '#86efac',
+                400: '#4ade80',
+                500: '#10c86e', // Organizze Green original
+                600: '#064e3b', // Deep Midnight Green (melhor para Dark Mode)
+                700: '#065f46',
+                800: '#064e3b',
+                900: '#022c22',
+              },
+              surface: {
+                light: '#f4f7f6',
+                dark: '#0f172a',
+                accent: '#ffffff'
+              }
+            },
+            borderRadius: {
+              '3xl': '1.5rem',
+              '4xl': '2rem',
+              '5xl': '2.5rem',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+      body { 
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        background-color: #f4f7f6;
+      }
+      .dark body {
+        background-color: #020617; /* Um pouco mais escuro que o slate-950 original */
+      }
+      .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      /* Custom shadow for cards */
+      .card-shadow {
+        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+      }
+      /* Hide scrollbar */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+</head>
+<body class="text-slate-900 dark:text-slate-100 transition-colors duration-500">
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>

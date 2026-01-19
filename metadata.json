@@ -1,0 +1,5 @@
+{
+  "name": "ViagemSmart - Controle de Gastos",
+  "description": "Uma aplicação minimalista para planejamento e controle financeiro de viagens em grupo, com conversão automática de moedas e análise inteligente de gastos por cidade e pessoa.",
+  "requestFramePermissions": []
+}
