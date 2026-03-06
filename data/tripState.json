@@ -1,0 +1,595 @@
+{
+  "users": [
+    {
+      "id": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "name": "James",
+      "color": "#10b981"
+    },
+    {
+      "id": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "name": "Bond",
+      "color": "#f59e0b"
+    }
+  ],
+  "cities": [
+    {
+      "id": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "name": "Londres",
+      "country": "Inglaterra"
+    },
+    {
+      "id": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "name": "Paris",
+      "country": "França"
+    },
+    {
+      "id": "2ba74045-6e28-4136-a6d4-fff2f45f2371",
+      "name": "Mônaco",
+      "country": "Mônaco"
+    },
+    {
+      "id": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "name": "Roma",
+      "country": "Itália"
+    }
+  ],
+  "categories": [
+    {
+      "id": "Alimentação",
+      "icon": "fa-utensils",
+      "color": "text-orange-500",
+      "bg": "bg-orange-500/10"
+    },
+    {
+      "id": "Transporte",
+      "icon": "fa-car",
+      "color": "text-brand-500",
+      "bg": "bg-brand-500/10"
+    },
+    {
+      "id": "Trem",
+      "icon": "fa-train",
+      "color": "text-cyan-500",
+      "bg": "bg-cyan-500/10"
+    },
+    {
+      "id": "Hospedagem",
+      "icon": "fa-hotel",
+      "color": "text-emerald-500",
+      "bg": "bg-emerald-500/10"
+    },
+    {
+      "id": "Lazer",
+      "icon": "fa-ticket",
+      "color": "text-purple-500",
+      "bg": "bg-purple-500/10"
+    },
+    {
+      "id": "Compras",
+      "icon": "fa-bag-shopping",
+      "color": "text-pink-500",
+      "bg": "bg-pink-500/10"
+    },
+    {
+      "id": "Avião",
+      "icon": "fa-plane",
+      "color": "text-blue-500",
+      "bg": "bg-blue-500/10"
+    },
+    {
+      "id": "Souvenir",
+      "icon": "fa-plane",
+      "color": "text-blue-500",
+      "bg": "bg-blue-500/10"
+    },
+    {
+      "id": "Outros",
+      "icon": "fa-ellipsis",
+      "color": "text-slate-500",
+      "bg": "bg-slate-500/10"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "bfe3bf30-2588-40aa-a1e2-dd0f42d464e3",
+      "description": "Passagem aérea GRU → LHR",
+      "amount": 4200,
+      "currencyCode": "BRL",
+      "convertedAmountBRL": 4200,
+      "exchangeRateToBRL": 1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Avião",
+      "date": "2026-05-02T12:00:00.000Z",
+      "paymentDate": "2026-05-02T12:00:00.000Z",
+      "time": "22:10",
+      "startTime": "22:10",
+      "endTime": "13:40"
+    },
+    {
+      "id": "b0648352-cf0d-476d-9211-bdac0a0dbb73",
+      "description": "Hotel em Londres (3 noites)",
+      "amount": 540,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 3915,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08"
+      ],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Hospedagem",
+      "date": "2026-05-03T12:00:00.000Z",
+      "paymentDate": "2026-05-03T12:00:00.000Z"
+    },
+    {
+      "id": "a7d2fd42-663d-4534-b55a-d5c927217856",
+      "description": "Oyster card",
+      "amount": 40,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 290,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Transporte",
+      "date": "2026-05-03T12:00:00.000Z",
+      "paymentDate": "2026-05-03T12:00:00.000Z"
+    },
+    {
+      "id": "1c3c8429-5ebf-4f3a-9a98-154f430ef82e",
+      "description": "Fish & chips",
+      "amount": 32,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 232,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Alimentação",
+      "date": "2026-05-03T12:00:00.000Z",
+      "paymentDate": "2026-05-03T12:00:00.000Z"
+    },
+    {
+      "id": "5f07245c-1890-4aed-8994-d41107b21639",
+      "description": "Tower of London",
+      "amount": 70,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 507.5,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Lazer",
+      "date": "2026-05-04T12:00:00.000Z",
+      "paymentDate": "2026-05-04T12:00:00.000Z",
+      "time": "10:00",
+      "startTime": "10:00",
+      "endTime": "12:30"
+    },
+    {
+      "id": "fa09813c-5695-414c-8cb8-cccc2ae9246e",
+      "description": "Martini (agitado, não mexido)",
+      "amount": 38,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 275.5,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Alimentação",
+      "date": "2026-05-04T12:00:00.000Z",
+      "paymentDate": "2026-05-04T12:00:00.000Z",
+      "time": "21:00",
+      "startTime": "21:00"
+    },
+    {
+      "id": "5d7a89ce-af6a-4f3b-975e-336bb9231f78",
+      "description": "Alfaiataria em Savile Row",
+      "amount": 320,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 2320,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Compras",
+      "date": "2026-05-05T12:00:00.000Z",
+      "paymentDate": "2026-05-05T12:00:00.000Z"
+    },
+    {
+      "id": "a5aac7f2-3b84-48ef-be66-b7e2c19b24f5",
+      "description": "Eurostar Londres → Paris",
+      "amount": 190,
+      "currencyCode": "GBP",
+      "convertedAmountBRL": 1377.5,
+      "exchangeRateToBRL": 7.25,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "974688a8-2681-435d-b4ca-0fd2213246be",
+      "category": "Trem",
+      "date": "2026-05-06T12:00:00.000Z",
+      "paymentDate": "2026-05-06T12:00:00.000Z",
+      "time": "09:31",
+      "startTime": "09:31",
+      "endTime": "12:47"
+    },
+    {
+      "id": "727b2fda-4a84-48f2-8b01-234ffec9d9f4",
+      "description": "Hotel em Paris (3 noites)",
+      "amount": 620,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 3782,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Hospedagem",
+      "date": "2026-05-06T12:00:00.000Z",
+      "paymentDate": "2026-05-06T12:00:00.000Z"
+    },
+    {
+      "id": "0182aa9c-775f-422a-b993-b2eb16a9855a",
+      "description": "Croissants e café",
+      "amount": 14.5,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 88.45,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Alimentação",
+      "date": "2026-05-07T12:00:00.000Z",
+      "paymentDate": "2026-05-07T12:00:00.000Z"
+    },
+    {
+      "id": "bfe4e998-8a83-4319-b8a3-1720907971bb",
+      "description": "Museu do Louvre",
+      "amount": 44,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 268.4,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Lazer",
+      "date": "2026-05-07T12:00:00.000Z",
+      "paymentDate": "2026-05-07T12:00:00.000Z",
+      "time": "09:00",
+      "startTime": "09:00",
+      "endTime": "13:00"
+    },
+    {
+      "id": "1b2a3cda-4360-4a4c-b160-6978459976d3",
+      "description": "Jantar na Torre Eiffel",
+      "amount": 210,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 1281,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Alimentação",
+      "date": "2026-05-07T12:00:00.000Z",
+      "paymentDate": "2026-05-07T12:00:00.000Z",
+      "time": "20:00",
+      "startTime": "20:00",
+      "endTime": "22:30"
+    },
+    {
+      "id": "94931795-ec43-4f5d-bc0d-0c790d22aa95",
+      "description": "Passe de metrô (Navigo)",
+      "amount": 31,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 189.1,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Transporte",
+      "date": "2026-05-08T12:00:00.000Z",
+      "paymentDate": "2026-05-08T12:00:00.000Z"
+    },
+    {
+      "id": "7caba364-5157-45ab-ba48-ed5b9b209fc6",
+      "description": "Chaveiro da Torre",
+      "amount": 9,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 54.9,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Souvenir",
+      "date": "2026-05-08T12:00:00.000Z",
+      "paymentDate": "2026-05-08T12:00:00.000Z"
+    },
+    {
+      "id": "ea9f19f5-61a2-4ce5-88b6-2afcb1e47903",
+      "description": "Trem Paris → Mônaco",
+      "amount": 168,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 1024.8,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08"
+      ],
+      "cityId": "6ef11695-e309-471b-b9fb-93a36696939c",
+      "category": "Trem",
+      "date": "2026-05-09T12:00:00.000Z",
+      "paymentDate": "2026-05-09T12:00:00.000Z",
+      "time": "07:46",
+      "startTime": "07:46",
+      "endTime": "13:41"
+    },
+    {
+      "id": "d9271d1a-1ecc-40f2-b8fd-e4f816ea4901",
+      "description": "Hotel em Mônaco (1 noite)",
+      "amount": 480,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 2928,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "2ba74045-6e28-4136-a6d4-fff2f45f2371",
+      "category": "Hospedagem",
+      "date": "2026-05-09T12:00:00.000Z",
+      "paymentDate": "2026-05-09T12:00:00.000Z"
+    },
+    {
+      "id": "8c0aab7a-5161-4c3b-b755-36c6bbfbf811",
+      "description": "Cassino de Monte Carlo",
+      "amount": 150,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 915,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "2ba74045-6e28-4136-a6d4-fff2f45f2371",
+      "category": "Lazer",
+      "date": "2026-05-09T12:00:00.000Z",
+      "paymentDate": "2026-05-09T12:00:00.000Z",
+      "time": "22:00",
+      "startTime": "22:00",
+      "endTime": "01:00"
+    },
+    {
+      "id": "e65258f1-9c54-436a-bcf8-33e3ce80c1e8",
+      "description": "Aston Martin (aluguel por um dia)",
+      "amount": 390,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 2379,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "2ba74045-6e28-4136-a6d4-fff2f45f2371",
+      "category": "Transporte",
+      "date": "2026-05-10T12:00:00.000Z",
+      "paymentDate": "2026-05-10T12:00:00.000Z"
+    },
+    {
+      "id": "c7775392-332a-48eb-a37f-472221b93463",
+      "description": "Voo Nice → Roma",
+      "amount": 236,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 1439.6,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Avião",
+      "date": "2026-05-10T12:00:00.000Z",
+      "paymentDate": "2026-05-10T12:00:00.000Z",
+      "time": "18:05",
+      "startTime": "18:05",
+      "endTime": "19:35"
+    },
+    {
+      "id": "9f38627b-9c0d-4472-a56c-3d0d62aa2b9f",
+      "description": "Hotel em Roma (3 noites)",
+      "amount": 510,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 3111,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Hospedagem",
+      "date": "2026-05-10T12:00:00.000Z",
+      "paymentDate": "2026-05-10T12:00:00.000Z"
+    },
+    {
+      "id": "05618880-eed5-4e5a-a0f3-ebad86c35715",
+      "description": "Coliseu + Fórum Romano",
+      "amount": 48,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 292.8,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Lazer",
+      "date": "2026-05-11T12:00:00.000Z",
+      "paymentDate": "2026-05-11T12:00:00.000Z",
+      "time": "08:30",
+      "startTime": "08:30",
+      "endTime": "11:30"
+    },
+    {
+      "id": "04204f0d-e05a-4b96-b9ac-d29ab7b8645e",
+      "description": "Carbonara em Trastevere",
+      "amount": 36,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 219.6,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Alimentação",
+      "date": "2026-05-11T12:00:00.000Z",
+      "paymentDate": "2026-05-11T12:00:00.000Z"
+    },
+    {
+      "id": "01a6fce5-6000-4f9b-8e44-1d78ff7e15d5",
+      "description": "Gelato",
+      "amount": 9,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 54.9,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Alimentação",
+      "date": "2026-05-11T12:00:00.000Z",
+      "paymentDate": "2026-05-11T12:00:00.000Z"
+    },
+    {
+      "id": "4dcd8359-bf86-4bf0-b041-42a4d5c807a4",
+      "description": "Museus do Vaticano",
+      "amount": 64,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 390.4,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Lazer",
+      "date": "2026-05-12T12:00:00.000Z",
+      "paymentDate": "2026-05-12T12:00:00.000Z",
+      "time": "09:00",
+      "startTime": "09:00",
+      "endTime": "12:00"
+    },
+    {
+      "id": "10f9af98-a410-48d9-ad40-f69a5dd9f661",
+      "description": "Óculos escuros",
+      "amount": 140,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 854,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "78d3531f-e967-4caf-a327-427029ee6b08",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Compras",
+      "date": "2026-05-12T12:00:00.000Z",
+      "paymentDate": "2026-05-12T12:00:00.000Z"
+    },
+    {
+      "id": "c3aa7612-ec80-40e4-b5ed-e4c6ccbc60a9",
+      "description": "Táxi para o aeroporto",
+      "amount": 55,
+      "currencyCode": "EUR",
+      "convertedAmountBRL": 335.5,
+      "exchangeRateToBRL": 6.1,
+      "payerUserId": "a560cf31-4412-4205-8e57-54dfaf471369",
+      "userIds": [
+        "78d3531f-e967-4caf-a327-427029ee6b08",
+        "a560cf31-4412-4205-8e57-54dfaf471369"
+      ],
+      "settledUserIds": [],
+      "cityId": "bc1d0b43-a4e2-40fd-9405-2f5430509252",
+      "category": "Transporte",
+      "date": "2026-05-13T12:00:00.000Z",
+      "paymentDate": "2026-05-13T12:00:00.000Z"
+    }
+  ],
+  "currentCurrency": "BRL",
+  "totalBudgetBRL": 40000
+}
