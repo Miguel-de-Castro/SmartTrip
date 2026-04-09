@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { User, City, Expense, TripState } from "./types";
 import { CURRENCIES, DEFAULT_CATEGORIES } from "./constants";
 import { Dashboard } from "./components/Dashboard";
@@ -22,6 +22,8 @@ const App: React.FC = () => {
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [hideValues, setHideValues] = useState(false);
+  const [expenseSearchTerm, setExpenseSearchTerm] = useState("");
+  const [expenseCityFilter, setExpenseCityFilter] = useState("all");
 
   const [state, setState] = useState<TripState>(() => {
     const parsed = initialTripState as TripState;
@@ -211,6 +213,40 @@ const App: React.FC = () => {
 
   const header = getHeaderData();
 
+  const normalizedExpenseSearchTerm = expenseSearchTerm.trim().toLowerCase();
+
+  const expenseAutocompleteOptions = useMemo(() => {
+    return Array.from(
+      new Set(
+        state.expenses
+          .map((expense) => expense.description.trim())
+          .filter(Boolean),
+      ),
+    ).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  }, [state.expenses]);
+
+  const expenseCityOptions = useMemo(() => {
+    return [...state.cities].sort((a, b) =>
+      a.name.localeCompare(b.name, "pt-BR"),
+    );
+  }, [state.cities]);
+
+  const selectedExpenseCityName =
+    state.cities.find((city) => city.id === expenseCityFilter)?.name || "Todas";
+
+  const visibleExpenses = useMemo(() => {
+    return state.expenses.filter((expense) => {
+      const description = expense.description.toLowerCase();
+      const matchesSearch =
+        !normalizedExpenseSearchTerm ||
+        description.includes(normalizedExpenseSearchTerm);
+      const matchesCity =
+        expenseCityFilter === "all" || expense.cityId === expenseCityFilter;
+
+      return matchesSearch && matchesCity;
+    });
+  }, [state.expenses, normalizedExpenseSearchTerm, expenseCityFilter]);
+
   return (
     <div
       className={`min-h-screen transition-colors duration-500 ${isDarkMode ? "dark bg-slate-950" : "bg-slate-50"}`}
@@ -278,8 +314,59 @@ const App: React.FC = () => {
 
         {activeTab === "expenses" && (
           <div className="space-y-4 animate-in fade-in duration-500">
+            <div className="bg-white dark:bg-slate-900 p-4 rounded-3xl card-shadow border border-slate-100 dark:border-white/5">
+              <label
+                htmlFor="expense-search"
+                className="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2"
+              >
+                Buscar gasto
+              </label>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <div className="relative flex-1">
+                  <i className="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                  <input
+                    id="expense-search"
+                    type="search"
+                    value={expenseSearchTerm}
+                    onChange={(event) =>
+                      setExpenseSearchTerm(event.target.value)
+                    }
+                    list="expense-search-options"
+                    placeholder="Digite a descrição do gasto"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 pl-9 pr-3 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                  />
+                </div>
+                <select
+                  value={expenseCityFilter}
+                  onChange={(event) => setExpenseCityFilter(event.target.value)}
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-3 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 sm:w-48"
+                >
+                  <option value="all">Todas as cidades</option>
+                  {expenseCityOptions.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+                {expenseSearchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setExpenseSearchTerm("")}
+                    className="px-3 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-wider text-slate-500 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    Limpar
+                  </button>
+                )}
+              </div>
+              <datalist id="expense-search-options">
+                {expenseAutocompleteOptions.map((description) => (
+                  <option key={description} value={description} />
+                ))}
+              </datalist>
+            </div>
+
             {state.expenses.length > 0 ? (
-              state.expenses.map((expense) => {
+              visibleExpenses.map((expense) => {
                 const cat =
                   state.categories.find((c) => c.id === expense.category) ||
                   DEFAULT_CATEGORIES.find((c) => c.id === "Outros");
@@ -350,6 +437,17 @@ const App: React.FC = () => {
                 <i className="fa-solid fa-receipt text-4xl mb-4"></i>
                 <p className="text-xs font-black uppercase tracking-widest">
                   Nenhum gasto lançado
+                </p>
+              </div>
+            )}
+
+            {state.expenses.length > 0 && visibleExpenses.length === 0 && (
+              <div className="text-center py-10 bg-white dark:bg-slate-900 rounded-3xl card-shadow border border-slate-100 dark:border-white/5">
+                <i className="fa-solid fa-magnifying-glass text-2xl text-slate-300 mb-3"></i>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                  Nenhum gasto encontrado para "
+                  {expenseSearchTerm.trim() || "*"}" em{" "}
+                  {selectedExpenseCityName}
                 </p>
               </div>
             )}
