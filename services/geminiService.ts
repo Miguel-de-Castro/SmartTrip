@@ -14,7 +14,7 @@ export const getTravelInsights = async (
   if (expenses.length === 0)
     return "Adicione alguns gastos para receber insights da inteligência artificial!";
   if (!ai)
-    return "IA desativada: configure VITE_GEMINI_API_KEY para receber insights.";
+    return "IA desativada: configure GEMINI_API_KEY no .env.local para receber insights.";
 
   // Fixed: Expense uses userIds (array) instead of userId
   const summary = expenses

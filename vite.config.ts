@@ -61,16 +61,62 @@ const getHistoricalRate = async (currencyCode: string, paymentDate: string) => {
   throw new Error("No historical quote found");
 };
 
+const MAX_BODY_BYTES = 5 * 1024 * 1024;
+
+class HttpError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
 const readRequestBody = async (req: any) => {
   return new Promise<string>((resolve, reject) => {
     let body = "";
     req.on("data", (chunk: Buffer) => {
       body += chunk.toString();
+      if (body.length > MAX_BODY_BYTES) {
+        reject(new HttpError(413, "Request body too large"));
+        req.destroy();
+      }
     });
     req.on("end", () => resolve(body));
     req.on("error", reject);
   });
 };
+
+// The data API only answers this computer: requests whose Host or Origin isn't
+// localhost are refused, so other websites open in the browser (or DNS-rebinding
+// tricks) can't read or overwrite the trip.
+const LOOPBACK = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+const isLocalRequest = (req: any) => {
+  const host = String(req.headers.host ?? "").replace(/:\d+$/, "");
+  if (!LOOPBACK.has(host)) return false;
+  const origin = req.headers.origin;
+  if (!origin) return true;
+  try {
+    return LOOPBACK.has(new URL(origin).hostname);
+  } catch {
+    return false;
+  }
+};
+
+const isArrayOfObjects = (value: unknown) =>
+  Array.isArray(value) &&
+  value.every((item) => typeof item === "object" && item !== null);
+
+/** Shape check before anything is written to disk. */
+const isTripState = (value: any) =>
+  typeof value === "object" &&
+  value !== null &&
+  isArrayOfObjects(value.users) &&
+  isArrayOfObjects(value.cities) &&
+  isArrayOfObjects(value.expenses) &&
+  (value.categories === undefined || isArrayOfObjects(value.categories)) &&
+  typeof value.currentCurrency === "string" &&
+  typeof value.totalBudgetBRL === "number";
 
 const tripStateApiPlugin = () => ({
   name: "trip-state-api",
@@ -87,6 +133,14 @@ const tripStateApiPlugin = () => ({
 
       res.setHeader("Content-Type", "application/json; charset=utf-8");
 
+      if (!isLocalRequest(req)) {
+        res.statusCode = 403;
+        res.end(
+          JSON.stringify({ error: "Only requests from this computer are allowed" }),
+        );
+        return;
+      }
+
       try {
         if (requestUrl.pathname.startsWith("/api/exchange-rate")) {
           if (req.method !== "GET") {
@@ -99,11 +153,15 @@ const tripStateApiPlugin = () => ({
             requestUrl.searchParams.get("currencyCode") || "";
           const paymentDate = requestUrl.searchParams.get("paymentDate") || "";
 
-          if (!currencyCode || !paymentDate) {
+          if (
+            !/^[A-Za-z]{3}$/.test(currencyCode) ||
+            !/^\d{4}-\d{2}-\d{2}/.test(paymentDate)
+          ) {
             res.statusCode = 400;
             res.end(
               JSON.stringify({
-                error: "currencyCode and paymentDate are required",
+                error:
+                  "currencyCode (3 letters) and paymentDate (YYYY-MM-DD) are required",
               }),
             );
             return;
@@ -126,8 +184,15 @@ const tripStateApiPlugin = () => ({
         }
 
         if (req.method === "PUT") {
+          const contentType = String(req.headers["content-type"] ?? "");
+          if (!contentType.includes("application/json")) {
+            throw new HttpError(415, "Content-Type must be application/json");
+          }
           const body = await readRequestBody(req);
           const parsed = JSON.parse(body);
+          if (!isTripState(parsed)) {
+            throw new HttpError(400, "Body is not a valid trip state");
+          }
           await fs.writeFile(
             localDataFilePath,
             `${JSON.stringify(parsed, null, 2)}\n`,
@@ -141,6 +206,11 @@ const tripStateApiPlugin = () => ({
         res.statusCode = 405;
         res.end(JSON.stringify({ error: "Method not allowed" }));
       } catch (error) {
+        if (error instanceof HttpError || error instanceof SyntaxError) {
+          res.statusCode = error instanceof HttpError ? error.status : 400;
+          res.end(JSON.stringify({ error: error.message }));
+          return;
+        }
         res.statusCode = 500;
         res.end(JSON.stringify({ error: "Failed to process API request" }));
       }
@@ -150,15 +220,23 @@ const tripStateApiPlugin = () => ({
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
+  // The placeholder from .env.example counts as "no key": smart input stays off
+  // instead of calling Gemini with an invalid key.
+  const geminiKey =
+    env.GEMINI_API_KEY && !/your_gemini_api_key/i.test(env.GEMINI_API_KEY)
+      ? env.GEMINI_API_KEY
+      : "";
   return {
     server: {
       port: 3000,
-      host: "0.0.0.0",
+      // Local only. This dev server also hosts the trip data API, which must
+      // not be reachable from the network.
+      host: "localhost",
     },
     plugins: [tripStateApiPlugin(), react()],
     define: {
-      "process.env.API_KEY": JSON.stringify(env.GEMINI_API_KEY),
-      "process.env.GEMINI_API_KEY": JSON.stringify(env.GEMINI_API_KEY),
+      "process.env.API_KEY": JSON.stringify(geminiKey),
+      "process.env.GEMINI_API_KEY": JSON.stringify(geminiKey),
     },
     resolve: {
       alias: {

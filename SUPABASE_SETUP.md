@@ -1,5 +1,7 @@
 # Guia de Configuração: Supabase + ViagemSmart
 
+> **Status: proposta, não implementada.** Hoje o app salva tudo em `data/tripState.local.json` (veja o README). Este guia foi escrito quando os dados ainda ficavam no localStorage e fica aqui como referência para uma futura migração.
+
 Este guia descreve os passos necessários para conectar a aplicação ViagemSmart ao **Supabase**, transformando o armazenamento local (localStorage) em um banco de dados persistente na nuvem.
 
 ## 1. Criar conta e projeto no Supabase

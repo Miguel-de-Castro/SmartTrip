@@ -25,3 +25,12 @@ dist-ssr
 
 # Real trip data (never committed); data/tripState.json is the demo seed
 data/*.local.json
+
+# Env files: real keys go in .env or .env.local (both ignored); .env.example is the template
+.env
+.env.*
+!.env.example
+
+# Any other trip data file (backups, exports); only the demo seed is versioned
+data/*.json
+!data/tripState.json

@@ -8,7 +8,7 @@ Controle de gastos para viagens em grupo: registre cada despesa na moeda local, 
   <img src="docs/screenshots/mobile-calendar.png" alt="Agenda de gastos" width="260" />
 </p>
 
-> As capturas usam dados de exemplo com nomes fictícios.
+> As capturas mostram a viagem de demonstração (James e Bond), com dados totalmente fictícios.
 
 ## Funcionalidades
 
@@ -36,7 +36,7 @@ Controle de gastos para viagens em grupo: registre cada despesa na moeda local, 
 - React 19 + TypeScript + Vite
 - Tailwind (via CDN) + Font Awesome
 - [`@google/genai`](https://www.npmjs.com/package/@google/genai) para a entrada inteligente (modelo `gemini-3-flash-preview`)
-- Persistência num arquivo JSON local (`data/tripState.json`), lido e gravado por um pequeno middleware dentro do `vite.config.ts`
+- Persistência num arquivo JSON local (`data/tripState.local.json`), lido e gravado por um pequeno middleware dentro do `vite.config.ts`
 
 ## Rodando localmente
 
@@ -51,13 +51,22 @@ npm run dev          # http://localhost:3000
 
 | Variável | Obrigatória | Descrição |
 |---|---|---|
-| `GEMINI_API_KEY` | Não | Chave do [Google AI Studio](https://aistudio.google.com/apikey). Coloque a sua num `.env.local`, que é ignorado pelo git; o `.env` versionado traz só o placeholder. Sem a chave, o app funciona normalmente e só a entrada inteligente fica desativada. |
+| `GEMINI_API_KEY` | Não | Chave do [Google AI Studio](https://aistudio.google.com/apikey). Copie o `.env.example` para `.env.local` (ignorado pelo git) e coloque a sua chave. Enquanto o valor for o placeholder, a chave é tratada como ausente. Sem a chave, o app funciona normalmente e só a entrada inteligente fica desativada. |
 
 > **Atenção:** o Vite injeta `GEMINI_API_KEY` no JavaScript do navegador (`vite.config.ts`). Isso serve para uso local, mas **não publique um build com uma chave real**, porque qualquer pessoa conseguiria lê-la. Para deploy público, mova a chamada ao Gemini para um backend.
 
 ## Como os dados são salvos
 
-O estado da viagem (viajantes, cidades, categorias, gastos e orçamento) fica em `data/tripState.json`. Em `npm run dev`, o middleware do Vite expõe:
+O estado da viagem (viajantes, cidades, categorias, gastos e orçamento) fica em dois arquivos:
+
+| Arquivo | Versionado? | Papel |
+|---|---|---|
+| `data/tripState.local.json` | Não (gitignored) | **Seus dados.** É lido primeiro e é o único arquivo em que o app grava |
+| `data/tripState.json` | Sim | Viagem de demonstração (James e Bond). Só é lida enquanto o arquivo local não existe, e nunca é alterada |
+
+Num clone novo, o app abre com a demonstração. Ao salvar o primeiro gasto, o `tripState.local.json` é criado e passa a ser a fonte dos dados.
+
+Em `npm run dev`, o middleware do Vite expõe:
 
 | Rota | Função |
 |---|---|
@@ -65,7 +74,11 @@ O estado da viagem (viajantes, cidades, categorias, gastos e orçamento) fica em
 | `PUT /api/trip-state` | Grava o estado atual no arquivo |
 | `GET /api/exchange-rate` | Busca a cotação histórica para BRL (proxy da AwesomeAPI) |
 
-Como essas rotas existem só no servidor de desenvolvimento, `npm run build` gera um site estático que usa o estado embutido no build. O [`SUPABASE_SETUP.md`](SUPABASE_SETUP.md) descreve como trocar o arquivo local por um banco no Supabase.
+Como essas rotas existem só no servidor de desenvolvimento, `npm run build` gera um site estático que usa o estado embutido no build. O [`SUPABASE_SETUP.md`](SUPABASE_SETUP.md) é uma **proposta, ainda não implementada**, de como trocar o arquivo local por um banco no Supabase.
+
+### Segurança
+
+O SmartTrip foi feito para rodar localmente. O servidor de desenvolvimento escuta só em `localhost`, e a API recusa pedidos de outros sites (`Origin`) ou com `Host` diferente de localhost. As gravações exigem `Content-Type: application/json`, têm limite de tamanho e passam por uma validação do formato. Não exponha o servidor na rede (nada de `--host 0.0.0.0` ou túneis).
 
 ## Estrutura
 
@@ -82,7 +95,8 @@ services/
   geminiService.ts      entrada inteligente e insights via Gemini
   exchangeRateService.ts cotação histórica (AwesomeAPI)
 utils/                  formatação de moeda e datas
-data/tripState.json     estado persistido da viagem
+data/tripState.json     viagem de demonstração (versionada)
+data/tripState.local.json  seus dados (gitignored, criado ao salvar)
 ```
 
 ## Licença
