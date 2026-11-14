@@ -3,7 +3,20 @@ import fs from "fs/promises";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
-const dataFilePath = path.resolve(__dirname, "data", "tripState.json");
+// Your real trip lives in tripState.local.json (gitignored) and always wins.
+// tripState.json is the versioned demo data (James & Bond). It is only read
+// when no local file exists yet, and it is never written to.
+const localDataFilePath = path.resolve(__dirname, "data", "tripState.local.json");
+const seedDataFilePath = path.resolve(__dirname, "data", "tripState.json");
+
+const fileExists = async (filePath: string) => {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const toApiDate = (date: Date) => {
   const yyyy = date.getFullYear();
@@ -103,7 +116,10 @@ const tripStateApiPlugin = () => ({
         }
 
         if (req.method === "GET") {
-          const raw = await fs.readFile(dataFilePath, "utf-8");
+          const source = (await fileExists(localDataFilePath))
+            ? localDataFilePath
+            : seedDataFilePath;
+          const raw = await fs.readFile(source, "utf-8");
           res.statusCode = 200;
           res.end(raw);
           return;
@@ -113,7 +129,7 @@ const tripStateApiPlugin = () => ({
           const body = await readRequestBody(req);
           const parsed = JSON.parse(body);
           await fs.writeFile(
-            dataFilePath,
+            localDataFilePath,
             `${JSON.stringify(parsed, null, 2)}\n`,
             "utf-8",
           );
