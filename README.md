@@ -84,3 +84,7 @@ services/
 utils/                  formatação de moeda e datas
 data/tripState.json     estado persistido da viagem
 ```
+
+## Licença
+
+[MIT](LICENSE)
