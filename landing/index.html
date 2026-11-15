@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartTrip: a conta da viagem em grupo, resolvida</title>
+  <meta name="description" content="SmartTrip controla os gastos de uma viagem em grupo: multimoeda com cotação do dia do pagamento, divisão entre viajantes e entrada inteligente opcional via Gemini. React, TypeScript e Vite.">
+  <meta name="author" content="Miguel Castro">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f9f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#07130e" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="static/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="SmartTrip">
+  <meta property="og:title" content="SmartTrip: a conta da viagem em grupo, resolvida">
+  <meta property="og:description" content="Gastos em várias moedas, cotação do dia do pagamento e o acerto final entre os viajantes. Projeto de Miguel Castro.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Miguel-de-Castro/SmartTrip/main/landing/static/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Telas do SmartTrip: visão geral dos gastos e a aba Devendo, com a viagem de demonstração.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SmartTrip: a conta da viagem em grupo, resolvida">
+  <meta name="twitter:description" content="Gastos em várias moedas, cotação do dia do pagamento e o acerto final entre os viajantes.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Miguel-de-Castro/SmartTrip/main/landing/static/og.png">
+  <meta name="twitter:image:alt" content="Telas do SmartTrip: visão geral dos gastos e a aba Devendo, com a viagem de demonstração.">
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="#topo" aria-label="SmartTrip, início">
+        <img src="static/favicon.svg" width="28" height="28" alt="">
+        <span>SmartTrip</span>
+      </a>
+      <nav aria-label="Principal">
+        <a class="nav-link" href="#telas">Telas</a>
+        <a class="nav-link" href="#decisoes">Decisões</a>
+        <a class="nav-link" href="#rodar">Como rodar</a>
+        <a class="btn btn-sm" href="https://github.com/Miguel-de-Castro/SmartTrip" rel="noopener">Ver código no GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero wrap" id="topo">
+      <div class="hero-copy">
+        <h1>A conta da viagem em grupo, <em>resolvida</em>.</h1>
+        <p class="lead">Cada gasto na moeda local, convertido pela cotação do dia do pagamento, com o acerto final entre os viajantes.</p>
+        <div class="cta">
+          <a class="btn" href="https://github.com/Miguel-de-Castro/SmartTrip" rel="noopener">Ver código no GitHub</a>
+          <a class="btn btn-ghost" href="#rodar">Como rodar</a>
+        </div>
+      </div>
+      <div class="hero-shots">
+        <img class="phone phone-back" src="static/img/mobile-overview.webp" width="600" height="1298" alt="Tela de visão geral do SmartTrip: total consumido, limite de orçamento e saldo de cada viajante, com a viagem de demonstração de James e Bond." fetchpriority="high">
+        <img class="phone phone-front" src="static/img/mobile-debts.webp" width="600" height="1298" alt="Aba Devendo: total em aberto, resumo líquido de Bond para James e a lista de pendências por gasto." fetchpriority="high">
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="t-fluxo">
+      <div class="wrap">
+        <h2 id="t-fluxo" class="reveal">Um gasto, três cálculos</h2>
+        <ol class="flow">
+          <li class="reveal">
+            <span class="flow-k">Entrada</span>
+            <strong>200 EUR</strong>
+            <span>Aluguel do carro, pago por James, dividido entre James e Bond.</span>
+          </li>
+          <li class="reveal">
+            <span class="flow-k">Conversão</span>
+            <strong>EUR para BRL</strong>
+            <span>Cotação da data do pagamento, não a de hoje. A taxa fica salva no gasto.</span>
+          </li>
+          <li class="reveal">
+            <span class="flow-k">Divisão</span>
+            <strong>Bond deve a James</strong>
+            <span>O valor em reais é repartido entre os participantes e entra no saldo líquido da dupla.</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="shots wrap" id="telas" aria-labelledby="t-telas">
+      <h2 id="t-telas" class="reveal">Celular na viagem, desktop na mesa</h2>
+      <p class="sub reveal">O app tem layout mobile e desktop, tema claro e escuro, e um modo para ocultar os valores. Os prints usam a viagem de demonstração (James e Bond), com dados fictícios.</p>
+
+      <figure class="desk reveal">
+        <img src="static/img/desktop-overview.webp" width="1440" height="900" loading="lazy" alt="Layout desktop da visão geral: total consumido de R$ 32.725,95, 82% do orçamento, saldos de James e Bond e gastos por cidade.">
+        <figcaption>Visão geral no desktop: orçamento, saldos e gastos agrupados por cidade, categoria ou viajante.</figcaption>
+      </figure>
+
+      <div class="phones">
+        <figure class="reveal">
+          <img src="static/img/mobile-expenses.webp" width="520" height="1125" loading="lazy" alt="Lista de gastos da viagem, com valor original e valor convertido para reais.">
+          <figcaption>Gastos, com o valor original e o convertido.</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="static/img/mobile-new-expense.webp" width="520" height="1125" loading="lazy" alt="Formulário Novo Gasto com o campo IA Smart Input, quem pagou, divisão entre viajantes, valor, moeda e data.">
+          <figcaption>Novo gasto, manual ou por texto livre.</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="static/img/mobile-calendar.webp" width="520" height="1125" loading="lazy" alt="Agenda mensal com os gastos de cada dia.">
+          <figcaption>Agenda mensal com os gastos de cada dia.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="decisions wrap" id="decisoes" aria-labelledby="t-dec">
+      <h2 id="t-dec" class="reveal">Decisões que valem a conversa</h2>
+      <p class="sub reveal">O que está no código, sem enfeite. Cada item tem um motivo e um limite.</p>
+
+      <div class="bento">
+        <article class="cell cell-code reveal">
+          <h3>Cotação do dia do pagamento</h3>
+          <p>A conversão usa a cotação da data em que o gasto foi pago, via AwesomeAPI. Em fim de semana ou feriado, o servidor recua até 7 dias até achar uma cotação. O navegador nunca chama a API de câmbio direto: passa por <code>/api/exchange-rate</code>. Se a consulta falhar, USD, EUR e GBP usam uma taxa fixa aproximada; para as outras moedas o app não inventa valor.</p>
+          <pre class="code" tabindex="0" aria-label="Trecho de vite.config.ts"><code>for (let backDays = 0; backDays &lt;= 7; backDays += 1) {
+  candidateDate.setDate(baseDate.getDate() - backDays);
+  const pair = `${upperCurrency}-BRL`;
+  // consulta o dia; se não houver cotação, tenta o anterior
+}</code></pre>
+        </article>
+
+        <article class="cell cell-green reveal">
+          <h3>Dívidas compensadas por dupla</h3>
+          <p>Se Bond deve R$ 145 a James num gasto e James deve R$ 116 a Bond em outro, a aba Devendo mostra só a diferença. Cada pendência pode ser marcada como paga.</p>
+          <p class="stat" aria-label="Exemplo da demonstração: Bond deve R$ 4.110,03 a James">Bond <span aria-hidden="true">&rarr;</span> James <strong>R$ 4.110,03</strong></p>
+        </article>
+
+        <article class="cell reveal">
+          <h3>Dados no seu disco</h3>
+          <p>O estado da viagem é um JSON local, sem banco. A gravação é atômica (arquivo temporário e rename), guarda a versão anterior, valida o formato e aceita até 5 MB. Se o arquivo estiver corrompido, o app avisa e não salva por cima.</p>
+        </article>
+
+        <article class="cell reveal">
+          <h3>API só para localhost</h3>
+          <p>O middleware do Vite recusa pedidos com Host ou Origin fora de localhost, exige <code>Content-Type: application/json</code> e bloqueia o download direto do arquivo de dados.</p>
+        </article>
+
+        <article class="cell reveal">
+          <h3>IA opcional, nunca obrigatória</h3>
+          <p>Escreva "Aluguel do carro 200 EUR dividido" e o Gemini devolve descrição, valor, moeda e categoria em JSON. Sem chave, o resto funciona igual. Como o Vite embute a chave no JavaScript, o uso é local.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="scope wrap" aria-labelledby="t-escopo">
+      <h2 id="t-escopo" class="reveal">Stack e limites</h2>
+      <div class="scope-grid">
+        <div class="reveal">
+          <h3>Stack</h3>
+          <ul class="chips">
+            <li>React 19</li>
+            <li>TypeScript</li>
+            <li>Vite 6</li>
+            <li>@google/genai</li>
+            <li>AwesomeAPI</li>
+            <li>Tailwind via CDN</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h3>O que ele não é</h3>
+          <ul class="plain">
+            <li>Não é um app hospedado: roda na sua máquina, com um usuário só.</li>
+            <li>Não tem login nem banco. A migração para o Supabase está proposta em <code>SUPABASE_SETUP.md</code>, mas não foi implementada.</li>
+            <li>A divisão é sempre igual entre os participantes de cada gasto.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="run" id="rodar" aria-labelledby="t-rodar">
+      <div class="wrap run-in">
+        <h2 id="t-rodar" class="reveal">Como rodar</h2>
+        <p class="sub reveal">Precisa de Node.js 20 ou superior. Num clone novo, o app abre com a viagem de demonstração.</p>
+        <pre class="term reveal" tabindex="0" aria-label="Comandos para rodar o SmartTrip"><code>git clone https://github.com/Miguel-de-Castro/SmartTrip.git
+cd SmartTrip
+npm install
+npm run dev</code></pre>
+        <p class="note reveal">Abra <code>http://localhost:3000</code>. Ao salvar o primeiro gasto, o arquivo <code>data/tripState.local.json</code> é criado e passa a guardar os seus dados (ele fica fora do git). Para ligar a entrada inteligente, copie <code>.env.example</code> para <code>.env.local</code> e coloque a sua <code>GEMINI_API_KEY</code>.</p>
+        <p class="reveal"><a class="btn" href="https://github.com/Miguel-de-Castro/SmartTrip" rel="noopener">Ver código no GitHub</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <p>Projeto de <a href="https://github.com/Miguel-de-Castro" rel="noopener">Miguel Castro</a>. Licença MIT.</p>
+      <p class="muted">Fonte Plus Jakarta Sans (SIL OFL 1.1). Cotações da AwesomeAPI.</p>
+    </div>
+  </footer>
+</body>
+</html>
