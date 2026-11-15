@@ -2,7 +2,7 @@
 
 Controle de gastos para viagens em grupo: registre cada despesa na moeda local, veja tudo convertido para reais com a cotação do dia do pagamento e saiba exatamente quem deve quanto para quem no fim da viagem.
 
-[Landing page do projeto](landing/) (HTML estático, pronta para a Vercel com Root Directory = `landing`).
+**Landing page:** https://smarttrip-miguel.vercel.app
 
 <p align="center">
   <img src="docs/screenshots/mobile-overview.png" alt="Visão geral (mobile)" width="260" />
