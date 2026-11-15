@@ -17,7 +17,7 @@ Controle de gastos para viagens em grupo: registre cada despesa na moeda local, 
 - **Multimoeda com cotação histórica.** Cada gasto guarda o valor original (EUR, USD, GBP, ARS…) e o valor convertido para BRL usando a cotação da **data do pagamento**, obtida na [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas).
 - **Divisão de despesas.** Informe quem pagou e entre quem o gasto é dividido. A aba **Devendo** calcula quem deve para quem, com o resumo líquido entre as pessoas e a opção de marcar cada pendência como paga.
 - **Agenda.** Calendário mensal com os gastos de cada dia, inclusive horário de início e fim de atividades (passeios, museus, trens).
-- **Entrada inteligente com IA (opcional).** Escreva algo como *"Aluguel do carro 200 EUR dividido"* e o Gemini preenche descrição, valor, moeda e categoria.
+- **Entrada inteligente com IA (opcional).** O texto digitado é enviado ao Google Gemini. Escreva algo como *"Aluguel do carro 200 EUR dividido"* e o Gemini preenche descrição, valor, moeda e categoria.
 - **Importação em lote via CSV**, com modelo para download.
 - **Configurações:** meta de gastos, viajantes, destinos e categorias personalizáveis.
 - Tema claro/escuro, modo para ocultar valores e layout **mobile** ou **desktop**.
@@ -64,6 +64,8 @@ O estado da viagem (viajantes, cidades, categorias, gastos e orçamento) fica em
 | `data/tripState.local.json` | Não (gitignored) | **Seus dados.** É lido primeiro e é o único arquivo em que o app grava |
 | `data/tripState.json` | Sim | Viagem de demonstração (James e Bond). Só é lida enquanto o arquivo local não existe, e nunca é alterada |
 
+Cada gravação é atômica e guarda a versão anterior em `data/tripState.local.json.bak`. Se o arquivo local estiver corrompido, o app mostra um aviso e não salva nada por cima dele; para recuperar, copie o `.bak` de volta.
+
 Num clone novo, o app abre com a demonstração. Ao salvar o primeiro gasto, o `tripState.local.json` é criado e passa a ser a fonte dos dados.
 
 Em `npm run dev`, o middleware do Vite expõe:
@@ -98,6 +100,13 @@ utils/                  formatação de moeda e datas
 data/tripState.json     viagem de demonstração (versionada)
 data/tripState.local.json  seus dados (gitignored, criado ao salvar)
 ```
+
+## Créditos
+
+- Ícones: [Font Awesome Free](https://fontawesome.com/license/free) (ícones CC BY 4.0, fontes SIL OFL 1.1, código MIT)
+- Fonte: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) (SIL OFL 1.1)
+- Estilos: [Tailwind CSS](https://tailwindcss.com) (MIT)
+- Cotações: [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas)
 
 ## Licença
 

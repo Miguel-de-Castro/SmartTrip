@@ -36,15 +36,27 @@ const App: React.FC = () => {
     };
   });
 
+  // Shown as a banner whenever the trip couldn't be loaded or saved, so a
+  // failure is never silent.
+  const [storageError, setStorageError] = useState<string | null>(null);
+
   const persistTripState = async (nextState: TripState) => {
     try {
-      await fetch("/api/trip-state", {
+      const response = await fetch("/api/trip-state", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nextState),
       });
+      if (!response.ok) {
+        const detail = await response.json().catch(() => null);
+        throw new Error(detail?.error ?? `HTTP ${response.status}`);
+      }
+      setStorageError(null);
     } catch (error) {
       console.error("Erro ao salvar tripState.json:", error);
+      setStorageError(
+        "Não foi possível salvar a última alteração. Ela aparece na tela, mas some ao recarregar a página.",
+      );
     }
   };
 
@@ -57,10 +69,6 @@ const App: React.FC = () => {
     setState((prev) => {
       const next = updater(prev);
       if (loadedFromDisk.current) void persistTripState(next);
-      else
-        console.warn(
-          "Alteração não salva: os dados da viagem não foram carregados do disco.",
-        );
       return next;
     });
   };
@@ -68,7 +76,14 @@ const App: React.FC = () => {
   const loadFromJsonDb = async (): Promise<boolean> => {
     try {
       const response = await fetch("/api/trip-state", { cache: "no-store" });
-      if (!response.ok) return false;
+      if (!response.ok) {
+        // e.g. vite preview / a static build, where the data API doesn't exist
+        if (response.status !== 404) throw new Error(`HTTP ${response.status}`);
+        setStorageError(
+          "A API de dados não está disponível aqui (use npm run dev). Alterações não serão salvas.",
+        );
+        return false;
+      }
       const json = (await response.json()) as TripState;
       setState({
         ...json,
@@ -81,6 +96,9 @@ const App: React.FC = () => {
       return true;
     } catch (error) {
       console.error("Erro ao carregar tripState.json:", error);
+      setStorageError(
+        "Não foi possível carregar seus dados de data/tripState.local.json (o arquivo pode estar corrompido). Para proteger o arquivo, nenhuma alteração será salva até isso ser resolvido.",
+      );
       return false;
     }
   };
@@ -283,6 +301,14 @@ const App: React.FC = () => {
           isDesktopLayout ? "max-w-[1400px] px-8 pb-24" : "max-w-xl px-4 pb-32"
         }`}
       >
+        {storageError && (
+          <div
+            role="alert"
+            className="mb-4 rounded-2xl border border-red-300 bg-red-50 px-5 py-4 text-sm font-semibold text-red-700 shadow-sm dark:border-red-900 dark:bg-red-950 dark:text-red-200"
+          >
+            {storageError}
+          </div>
+        )}
         {activeTab === "overview" && (
           <Dashboard
             expenses={state.expenses}

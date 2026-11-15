@@ -132,9 +132,10 @@ const tripStateApiPlugin = () => ({
     server.middlewares.use(async (req: any, res: any, next: any) => {
       const requestUrl = new URL(req.url || "", "http://localhost");
 
+      // Exact paths only ("/api/trip-state-anything" is not this API).
       if (
-        !requestUrl.pathname.startsWith("/api/trip-state") &&
-        !requestUrl.pathname.startsWith("/api/exchange-rate")
+        requestUrl.pathname !== "/api/trip-state" &&
+        requestUrl.pathname !== "/api/exchange-rate"
       ) {
         return next();
       }
@@ -150,7 +151,7 @@ const tripStateApiPlugin = () => ({
       }
 
       try {
-        if (requestUrl.pathname.startsWith("/api/exchange-rate")) {
+        if (requestUrl.pathname === "/api/exchange-rate") {
           if (req.method !== "GET") {
             res.statusCode = 405;
             res.end(JSON.stringify({ error: "Method not allowed" }));
@@ -186,6 +187,20 @@ const tripStateApiPlugin = () => ({
             ? localDataFilePath
             : seedDataFilePath;
           const raw = await fs.readFile(source, "utf-8");
+          let stored: unknown;
+          try {
+            stored = JSON.parse(raw);
+          } catch {
+            stored = undefined;
+          }
+          if (!isTripState(stored)) {
+            // Never hand the UI a broken file: it would fall back to the demo,
+            // and the next save would overwrite the user's data.
+            throw new HttpError(
+              500,
+              `${path.basename(source)} is not a valid trip file (corrupted or edited by hand)`,
+            );
+          }
           res.statusCode = 200;
           res.end(raw);
           return;
@@ -201,11 +216,14 @@ const tripStateApiPlugin = () => ({
           if (!isTripState(parsed)) {
             throw new HttpError(400, "Body is not a valid trip state");
           }
-          await fs.writeFile(
-            localDataFilePath,
-            `${JSON.stringify(parsed, null, 2)}\n`,
-            "utf-8",
-          );
+          // Atomic write (temp file + rename) plus a one-step backup of the
+          // previous version, so a crash or a bad save is always recoverable.
+          const tmpPath = `${localDataFilePath}.tmp`;
+          await fs.writeFile(tmpPath, `${JSON.stringify(parsed, null, 2)}\n`, "utf-8");
+          if (await fileExists(localDataFilePath)) {
+            await fs.copyFile(localDataFilePath, `${localDataFilePath}.bak`);
+          }
+          await fs.rename(tmpPath, localDataFilePath);
           res.statusCode = 200;
           res.end(JSON.stringify({ ok: true }));
           return;
@@ -242,9 +260,10 @@ export default defineConfig(({ mode }) => {
       host: "localhost",
       fs: {
         // Vite would otherwise serve any project file by URL, including your
-        // real data at /data/tripState.local.json. Data only goes through the
-        // checked /api/trip-state route. (The first four are Vite's defaults.)
-        deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/data/*.local.json"],
+        // real data at /data/tripState.local.json. Everything in data/ except
+        // the demo seed is blocked (incl. the .bak); data only goes through
+        // the checked /api/trip-state route. (The first four are Vite's defaults.)
+        deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/data/!(tripState.json)"],
       },
     },
     plugins: [tripStateApiPlugin(), react()],
