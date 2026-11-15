@@ -32,5 +32,5 @@ data/*.local.json
 !.env.example
 
 # Any other trip data file (backups, exports); only the demo seed is versioned
-data/*.json
+data/**
 !data/tripState.json

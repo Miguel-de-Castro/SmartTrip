@@ -78,7 +78,7 @@ Como essas rotas existem só no servidor de desenvolvimento, `npm run build` ger
 
 ### Segurança
 
-O SmartTrip foi feito para rodar localmente. O servidor de desenvolvimento escuta só em `localhost`, e a API recusa pedidos de outros sites (`Origin`) ou com `Host` diferente de localhost. As gravações exigem `Content-Type: application/json`, têm limite de tamanho e passam por uma validação do formato. Não exponha o servidor na rede (nada de `--host 0.0.0.0` ou túneis).
+O SmartTrip foi feito para rodar localmente. O servidor de desenvolvimento escuta só em `localhost`, e a API recusa pedidos de outros sites (`Origin`) ou com `Host` diferente de localhost. As gravações exigem `Content-Type: application/json`, têm limite de tamanho e passam por uma validação do formato. O arquivo `data/tripState.local.json` não pode ser baixado direto pela URL (`server.fs.deny`); os dados só saem pela rota `/api/trip-state`. Não exponha o servidor na rede (nada de `--host 0.0.0.0` ou túneis).
 
 ## Estrutura
 

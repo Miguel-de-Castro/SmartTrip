@@ -74,15 +74,23 @@ class HttpError extends Error {
 
 const readRequestBody = async (req: any) => {
   return new Promise<string>((resolve, reject) => {
-    let body = "";
+    const chunks: Buffer[] = [];
+    let size = 0;
+    let tooLarge = false;
     req.on("data", (chunk: Buffer) => {
-      body += chunk.toString();
-      if (body.length > MAX_BODY_BYTES) {
-        reject(new HttpError(413, "Request body too large"));
-        req.destroy();
+      size += chunk.length;
+      if (size > MAX_BODY_BYTES) {
+        // Keep draining (don't destroy the socket) so the client gets a clean 413.
+        tooLarge = true;
+        chunks.length = 0;
+        return;
       }
+      chunks.push(chunk);
     });
-    req.on("end", () => resolve(body));
+    req.on("end", () => {
+      if (tooLarge) reject(new HttpError(413, "Request body too large"));
+      else resolve(Buffer.concat(chunks).toString("utf-8"));
+    });
     req.on("error", reject);
   });
 };
@@ -155,7 +163,7 @@ const tripStateApiPlugin = () => ({
 
           if (
             !/^[A-Za-z]{3}$/.test(currencyCode) ||
-            !/^\d{4}-\d{2}-\d{2}/.test(paymentDate)
+            !/^\d{4}-\d{2}-\d{2}$/.test(paymentDate)
           ) {
             res.statusCode = 400;
             res.end(
@@ -232,6 +240,12 @@ export default defineConfig(({ mode }) => {
       // Local only. This dev server also hosts the trip data API, which must
       // not be reachable from the network.
       host: "localhost",
+      fs: {
+        // Vite would otherwise serve any project file by URL, including your
+        // real data at /data/tripState.local.json. Data only goes through the
+        // checked /api/trip-state route. (The first four are Vite's defaults.)
+        deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/data/*.local.json"],
+      },
     },
     plugins: [tripStateApiPlugin(), react()],
     define: {

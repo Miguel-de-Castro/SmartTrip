@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { User, City, Expense, TripState } from "./types";
 import { CURRENCIES, DEFAULT_CATEGORIES } from "./constants";
 import { Dashboard } from "./components/Dashboard";
@@ -48,10 +48,19 @@ const App: React.FC = () => {
     }
   };
 
+  // Only save once the saved trip has actually been loaded. If loading failed
+  // (e.g. a corrupted data file), the app is showing the bundled demo, and
+  // saving it would overwrite the user's real file with demo data.
+  const loadedFromDisk = useRef(false);
+
   const applyStateUpdate = (updater: (prev: TripState) => TripState) => {
     setState((prev) => {
       const next = updater(prev);
-      void persistTripState(next);
+      if (loadedFromDisk.current) void persistTripState(next);
+      else
+        console.warn(
+          "Alteração não salva: os dados da viagem não foram carregados do disco.",
+        );
       return next;
     });
   };
@@ -68,6 +77,7 @@ const App: React.FC = () => {
             ? json.categories
             : DEFAULT_CATEGORIES,
       });
+      loadedFromDisk.current = true;
       return true;
     } catch (error) {
       console.error("Erro ao carregar tripState.json:", error);
@@ -217,7 +227,7 @@ const App: React.FC = () => {
 
   const expenseAutocompleteOptions = useMemo(() => {
     return Array.from(
-      new Set(
+      new Set<string>(
         state.expenses
           .map((expense) => expense.description.trim())
           .filter(Boolean),

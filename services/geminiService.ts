@@ -1,9 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 import { Expense, User, City } from "../types";
 
-const nodeApiKey =
-  typeof process !== "undefined" ? process.env.API_KEY : undefined;
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || nodeApiKey;
+// Injected by vite.config.ts from GEMINI_API_KEY (empty when unset or still the
+// .env.example placeholder, which turns the AI features off).
+const apiKey = typeof process !== "undefined" ? process.env.API_KEY : undefined;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getTravelInsights = async (
